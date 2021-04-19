@@ -38,8 +38,8 @@ def run_update():
     covid_dth12mths_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_dth_monthyr'])
 
     #overwrite covid death items
-    covid_dth2wks_item.overwriteItem(r'C:\Users\CentroPR\Desktop\Projects\012_CovidDash\COVID19_csv\covid_dth_2wks.csv')
-    covid_dth12mths_item.overwriteItem(r'C:\Users\CentroPR\Desktop\Projects\012_CovidDash\COVID19_csv\covid_dth_monthyr.csv')
+    covid_dth2wks_item.overwriteItem(dth_by_2wks_path)
+    covid_dth12mths_item.overwriteItem(dth_by_month_path)
 
     #get covid infection counts from last 2 weeks
     #get covid infection counts from last 12 months
