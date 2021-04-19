@@ -34,8 +34,8 @@ def run_update():
 
     #get existing item containing previous covid deaths counts for last 2 weeks
     #get existing item containing previous covid deaths counts for last 12 months
-    covid_dth2wks_item=ItemUpdate(username="adeleon_HC", password="centroPR123",itemid=item_ids['covid_dth_2wks'])
-    covid_dth12mths_item=ItemUpdate(username="adeleon_HC", password="centroPR123",itemid=item_ids['covid_dth_monthyr'])
+    covid_dth2wks_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_dth_2wks'])
+    covid_dth12mths_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_dth_monthyr'])
 
     #overwrite covid death items
     covid_dth2wks_item.overwriteItem(r'C:\Users\CentroPR\Desktop\Projects\012_CovidDash\COVID19_csv\covid_dth_2wks.csv')
@@ -54,15 +54,15 @@ def run_update():
 
     #get existing item containing previous covid infection counts for last 2 weeks
     #get existing item containing previous covid infection counts for last 12 months
-    covid_inf2wks_item=ItemUpdate(username="adeleon_HC", password="centroPR123",itemid=item_ids['covid_inf_2wks'])
-    covid_inf12mths_item=ItemUpdate(username="adeleon_HC", password="centroPR123",itemid=item_ids['covid_inf_monthyr'])
+    covid_inf2wks_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_inf_2wks'])
+    covid_inf12mths_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_inf_monthyr'])
 
     #overwrite covid infection items
-    covid_inf2wks_item.overwriteItem(r'C:\Users\CentroPR\Desktop\Projects\012_CovidDash\COVID19_csv\covid_inf_2wks.csv')
-    covid_inf12mths_item.overwriteItem(r'C:\Users\CentroPR\Desktop\Projects\012_CovidDash\COVID19_csv\covid_inf_monthyr.csv')
+    covid_inf2wks_item.overwriteItem(inf_by_2wks_path)
+    covid_inf12mths_item.overwriteItem(inf_by_month_path)
 
     #get main item on agol "COVID DATA
-    covid_alldata=ItemUpdate(username="adeleon_HC", password="centroPR123",itemid=item_ids['COVID DATA'])
+    covid_alldata=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['COVID DATA'])
     covid_alldata_item=covid_alldata.item
 
     #get recent data and the data of most recent data
