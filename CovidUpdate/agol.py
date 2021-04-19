@@ -3,17 +3,16 @@ from arcgis.gis import GIS,Item
 from arcgis import features
 
 class ItemUpdate:
-    def __init__(self,username, password,itemid,itemdict=None,userdict=None):
+    def __init__(self,gis,itemid,itemdict=None,userdict=None):
         """Does not acount for cases where their are more than one search result"""
-        
-        self.gis=GIS(username=username,password=password)
-        self.item=Item(self.gis,itemid,itemdict=itemdict)
+ 
+        self.item=Item(gis,itemid,itemdict=itemdict)
 
 #        query=' '.join("%s:%r" % (key,val) for (key,val) in kwargs.items())
 #        if "typ" in query:
 #            query=query.replace("typ","type").replace("'","")
 #
-#        item=self.gis.content.search(query)
+#        item=gis.content.search(query)
 #        assert item !=[],'The query provided did not return an item.'
 #        self.item  =item[0]
 
