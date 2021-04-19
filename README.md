@@ -9,4 +9,4 @@ The code is split into three python files.
 2. agol.py: This python file contains one class that allows users to pull items from ArcGIS online and overwrite the content.
 3. main.py: This python file runs the covid update using the two python files above.
 
-#Example:
+# Example:
