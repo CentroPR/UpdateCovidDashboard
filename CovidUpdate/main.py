@@ -1,6 +1,6 @@
 from covid_data import *
 from agol import *
-
+from arcgis.gis import GIS
 from pathlib import Path
 import os
 
@@ -14,6 +14,8 @@ BASE_DIR = os.path.dirname(Path(__file__).resolve())
 CSV_PATH=os.path.join(BASE_DIR,'CSV')
 
 def run_update():
+    gis =GIS(username="adeleon_HC",password="centroPR123")
+    
     #get covid data
     new_covid_dth_url="https://static.usafacts.org/public/data/covid-19/covid_deaths_usafacts.csv"
     covid_dth=query_COVID(new_covid_dth_url)
@@ -34,8 +36,8 @@ def run_update():
 
     #get existing item containing previous covid deaths counts for last 2 weeks
     #get existing item containing previous covid deaths counts for last 12 months
-    covid_dth2wks_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_dth_2wks'])
-    covid_dth12mths_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_dth_monthyr'])
+    covid_dth2wks_item=ItemUpdate(gis,itemid=item_ids['covid_dth_2wks'])
+    covid_dth12mths_item=ItemUpdate(gis,itemid=item_ids['covid_dth_monthyr'])
 
     #overwrite covid death items
     covid_dth2wks_item.overwriteItem(dth_by_2wks_path)
@@ -54,15 +56,15 @@ def run_update():
 
     #get existing item containing previous covid infection counts for last 2 weeks
     #get existing item containing previous covid infection counts for last 12 months
-    covid_inf2wks_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_inf_2wks'])
-    covid_inf12mths_item=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['covid_inf_monthyr'])
+    covid_inf2wks_item=ItemUpdate(gis,itemid=item_ids['covid_inf_2wks'])
+    covid_inf12mths_item=ItemUpdate(gis,itemid=item_ids['covid_inf_monthyr'])
 
     #overwrite covid infection items
     covid_inf2wks_item.overwriteItem(inf_by_2wks_path)
     covid_inf12mths_item.overwriteItem(inf_by_month_path)
 
     #get main item on agol "COVID DATA
-    covid_alldata=ItemUpdate(username="INSERT USERNAME", password="INSERT PASSWORD",itemid=item_ids['COVID DATA'])
+    covid_alldata=ItemUpdate(gis,itemid=item_ids['COVID DATA'])
     covid_alldata_item=covid_alldata.item
 
     #get recent data and the data of most recent data
