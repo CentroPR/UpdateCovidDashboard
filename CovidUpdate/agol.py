@@ -1,0 +1,71 @@
+import pandas as pd
+from arcgis.gis import GIS,Item
+from arcgis import features
+
+class ItemUpdate:
+    def __init__(self,username, password,itemid,itemdict=None,userdict=None):
+        """Does not acount for cases where their are more than one search result"""
+        
+        self.gis=GIS(username=username,password=password)
+        self.item=Item(self.gis,itemid,itemdict=itemdict)
+
+#        query=' '.join("%s:%r" % (key,val) for (key,val) in kwargs.items())
+#        if "typ" in query:
+#            query=query.replace("typ","type").replace("'","")
+#
+#        item=self.gis.content.search(query)
+#        assert item !=[],'The query provided did not return an item.'
+#        self.item  =item[0]
+
+    def overwriteItem(self,new_item):
+        from arcgis.features import FeatureLayerCollection
+        layer_collection = FeatureLayerCollection.fromitem(self.item)
+
+        #call the overwrite() method which can be accessed using the manager property
+        layer_collection.manager.overwrite(new_item)   
+        
+    def updateColumnData(self,df,join_field_df,join_field_attr, update_field_attr, update_field_df):
+        assert isinstance(df,pd.DataFrame), 'The df positional argument must be a Dataframe'
+        assert isinstance(join_field_df,str) , 'The join_field positional argument must be a string'
+        assert isinstance(join_field_attr,str) , 'The join_field positional argument must be a string'
+        assert isinstance(update_field_attr,str), 'The field_to_update positional argument must be a string'
+        assert isinstance(update_field_df,str), 'The update_field positional argument must be a string'
+        
+        layers=self.item.layers
+        feats=layers[0].query()
+        if hasattr(self,'update'):
+            features=self.update
+            self.update=[]
+        else:
+            features=feats.features
+            self.update=[]
+        i=0
+        for f in features:
+            attr=f.attributes
+            """add something to account for datetypes"""
+            field_attr=str(attr[join_field_attr])
+            if field_attr in df[join_field_df].tolist():
+                new_data=df.loc[df[join_field_df]==field_attr,update_field_df].item()
+                i+=1
+                print ('Good'+ str(i))
+            else:
+                new_data=-99999
+                
+            if update_field_attr.upper() =='INF' or update_field_attr.upper() =='DTH':
+                update_field_attr=update_field_attr.upper()
+
+                covid_recent_100k=round((new_data*100000)/attr['TOTPOP'])
+                f.set_value(update_field_attr + "_100k",covid_recent_100k)
+                
+            f.set_value(update_field_attr,new_data)
+            
+            self.update.append(f)
+            
+    def pushChanges(self):
+        from  math import floor
+        groups=floor(len(self.update)/100)
+        for group in range(groups+1):
+            group=100*group
+            print(group)
+            self.item.layers[0].edit_features(updates=self.update[group:group+100])    
+            
