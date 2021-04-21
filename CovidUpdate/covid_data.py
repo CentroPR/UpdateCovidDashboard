@@ -5,6 +5,20 @@ from pathlib import Path
 import os
 import requests
 import pandas as pd
+from sodapy import Socrata
+
+def reviseGEOID(df,col):
+    df[col]=df[col].apply(lambda x: ''.join(['0']*(5-len(str(x)))) +str(x) if len(str(x))<5 else str(x))    
+    return df
+
+def getVacineData():
+    client = Socrata("data.cdc.gov", None)
+    results = client.get("q9mh-h2tw", limit=4000)
+    results_df = pd.DataFrame.from_records(results)
+    results_df=results_df[['fips_code', 'estimated_hesitant','estimated_strongly_hesitant', 'ability_to_handle_a_covid','cvac_category', 'percent_adults_fully']]
+    results_df=results['percent_adults_fully'].apply(lambda val: round(100*val,1))
+    results_df=reviseGEOID(results_df,'fips_code')
+    return results_df
 
 class COVID:
     def __init__(self,url):
@@ -82,6 +96,7 @@ class query_COVID(COVID):
         covid_all_melt_mthyear['Month_Year'] = covid_all_melt_mthyear['Date'].dt.strftime('%Y-%m').drop(columns=['Date'])
         covid_all_melt_mthyear_groupby=covid_all_melt_mthyear.groupby(['Month_Year','State','County']).sum().reset_index()
         covid_all_melt_mthyear_groupby['Month_Year']=pd.to_datetime(covid_all_melt_mthyear_groupby['Month_Year'])
+        covid_all_melt_mthyear_groupby['Month_Year']=covid_all_melt_mthyear_groupby['Month_Year'].apply(lambda date:date.replace(day=2))
         if add_pr_states:
             covid_all_melt_mthyear_groupby=query_COVID.add_pr_states(covid_all_melt_mthyear_groupby,'State')
         return covid_all_melt_mthyear_groupby

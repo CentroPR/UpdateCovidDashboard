@@ -87,6 +87,21 @@ def run_update():
                                update_field_attr='DTH',
                                update_field_df=covid_dth_date)
 
+    vaccine_data=getVacineData()
+    
+    covid_alldata.updateColumnData(df=vaccine_data,
+                               join_field_df='fips_code',
+                               join_field_attr='GEOID', 
+                               update_field_attr='VACIN_PER',
+                               update_field_df='percent_adults_fully')
+
+    covid_alldata.updateColumnData(df=vaccine_data,
+                                   join_field_df='fips_code',
+                                   join_field_attr='GEOID', 
+                                   update_field_attr='CVAC',
+                                   update_field_df='ability_to_handle_a_covid')
+
+    
     #finalize changes
     covid_alldata.pushChanges()
 
