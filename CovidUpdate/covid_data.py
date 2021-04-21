@@ -15,8 +15,9 @@ def getVacineData():
     client = Socrata("data.cdc.gov", None)
     results = client.get("q9mh-h2tw", limit=4000)
     results_df = pd.DataFrame.from_records(results)
-    results_df=results_df[['fips_code', 'estimated_hesitant','estimated_strongly_hesitant', 'ability_to_handle_a_covid','cvac_category', 'percent_adults_fully']]
-    results_df=results['percent_adults_fully'].apply(lambda val: round(100*val,1))
+    results_df=results_df[['fips_code', 'ability_to_handle_a_covid', 'percent_adults_fully']]
+    results_df['percent_adults_fully']=results_df['percent_adults_fully'].astype(float).apply(lambda val: round(100*val,2))
+    results_df['ability_to_handle_a_covid']=results_df['ability_to_handle_a_covid'].astype(float)
     results_df=reviseGEOID(results_df,'fips_code')
     return results_df
 
