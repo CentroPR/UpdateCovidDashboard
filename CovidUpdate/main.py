@@ -109,23 +109,6 @@ def update_pr_dashboard():
 def run_update():
     update_stateside_dashboard()
     update_pr_dashboard()
-##    gis =GIS(username="jhinojos_HC",password="Rudy1949!")
-##    
-##    inf_by_2wks=covid_data.getCovidData_2wks(cases_or_dths='cases',us_or_pr='pr')
-##    inf_by_month=covid_data.getCovidData_mthYear(cases_or_dths='cases',us_or_pr='pr')
-##
-##    inf_by_2wks_path=os.path.join(CSV_PATH,'covid_inf_2wks_pr.csv')
-##    inf_by_month_path=os.path.join(CSV_PATH,'covid_inf_monthyr_pr.csv')
-##
-##    inf_by_2wks.to_csv(inf_by_2wks_path)
-##    inf_by_month.to_csv(inf_by_month_path)
-##
-##    covid_inf2wks_item=ItemUpdate(gis,itemid=item_ids['covid_inf_2wks'])
-##    covid_inf12mths_item=ItemUpdate(gis,itemid=item_ids['covid_inf_monthyr'])
-##
-##    #overwrite covid infection items
-##    covid_inf2wks_item.overwriteItem(inf_by_2wks_path)
-##    covid_inf12mths_item.overwriteItem(inf_by_month_path)
-    
+          
 if __name__ == "__main__":
    run_update()
