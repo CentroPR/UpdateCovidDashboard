@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(Path(__file__).resolve())
 CSV_PATH=os.path.join(BASE_DIR,'CSV')
 
 def update_stateside_dashboard():
-    gis =GIS(username="adeleon_HC",password="centroPR123")
+    gis =GIS(username="",password="")
     covid_data=query_COVID(source='usafacts')
     
     #get covid infection counts and death counts from last 2 weeks
@@ -82,7 +82,7 @@ def update_stateside_dashboard():
     covid_alldata.pushChanges()
 
 def update_pr_dashboard():
-    gis =GIS(username="jhinojos_HC",password="Rudy1949!")
+    gis =GIS(username="",password="")
     covid_data=query_COVID(source='nytimes')
     
     pr_inf_path=os.path.join(CSV_PATH,'covid_inf_daily_pr.csv')
