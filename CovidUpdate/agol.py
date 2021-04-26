@@ -53,7 +53,7 @@ class ItemUpdate:
             if update_field_attr.upper() =='INF' or update_field_attr.upper() =='DTH':
                 update_field_attr=update_field_attr.upper()
 
-                covid_recent_100k=round((new_data*100000)/attr['TOTPOP'])
+                covid_recent_100k=int(new_data*100000/attr['TOTPOP'])
                 f.set_value(update_field_attr + "_100k",covid_recent_100k)
                 
             f.set_value(update_field_attr,new_data)
