@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(Path(__file__).resolve())
 CSV_PATH=os.path.join(BASE_DIR,'CSV')
 
 def update_stateside_dashboard():
-    gis =GIS(username="",password="")
+    gis =GIS(username="adeleon_HC",password="centroPR123")
     covid_data=query_COVID(source='usafacts')
     
     #get covid infection counts and death counts from last 2 weeks
@@ -82,7 +82,7 @@ def update_stateside_dashboard():
     covid_alldata.pushChanges()
 
 def update_pr_dashboard():
-    gis =GIS(username="",password="")
+    gis =GIS(username="jhinojos_HC",password="Rudy1949!")
     covid_data=query_COVID(source='nytimes')
     
     pr_inf_path=os.path.join(CSV_PATH,'covid_inf_daily_pr.csv')
@@ -106,9 +106,19 @@ def update_pr_dashboard():
     pr_inf_by_4wks_item.overwriteItem(pr_inf_by_4wks_path)
     pr_inf_by_month_item.overwriteItem(pr_inf_by_month_path)
     
-def run_update():
-    update_stateside_dashboard()
-    update_pr_dashboard()
-          
+    #get main item on agol "COVID DATA
+    covid_pr_data=ItemUpdate(gis,itemid=item_ids['pr_indices'])
+
+    pr_inf_recent = covid_data.recent_covid_data_pr
+    #add new data do respective columns
+    covid_pr_data.updateColumnData(df=pr_inf_recent,
+                                   join_field_df='fips',
+                                   join_field_attr='GEOID', 
+                                   update_field_attr='INF',
+                                   update_field_df="cases"
+                                   )
+
+    covid_pr_data.pushChanges()
 if __name__ == "__main__":
-   run_update()
+    #update_stateside_dashboard()
+    update_pr_dashboard()

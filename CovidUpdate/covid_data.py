@@ -59,15 +59,13 @@ class COVID:
         self.recent_date = self.all_covid_data.loc[:,'date'].max()
         self.recent_covid_data=self.all_covid_data.loc[self.all_covid_data.loc[:,'date']==self.recent_date,:]
         
-        query_us = (self.all_covid_data.loc[:,'state']!="Puerto Rico")
-        
+        query_us = (self.all_covid_data.loc[:,'state']!="PR")
         self.covid_data_query_us = self.all_covid_data.loc[query_us,:]
-        
         self.recent_date_us = self.covid_data_query_us.loc[:,'date'].max()
         self.recent_covid_data_us=self.covid_data_query_us.loc[self.covid_data_query_us.loc[:,'date']==self.recent_date_us,:]
-        
-        if source=='nytimes':
-            query_pr = (self.all_covid_data.loc[:,'state']=="Puerto Rico") & (self.all_covid_data.loc[:,'county']!="Unknown")
+
+        if source == 'nytimes':
+            query_pr = (self.all_covid_data.loc[:,'state']=="PR") & (self.all_covid_data.loc[:,'county']!="Unknown")
             self.covid_data_query_pr = self.all_covid_data.loc[query_pr,:]
             self.recent_date_pr = self.covid_data_query_pr.loc[:,'date'].max()
             self.recent_covid_data_pr=self.covid_data_query_pr.loc[self.covid_data_query_pr.loc[:,'date']==self.recent_date_pr,:]
