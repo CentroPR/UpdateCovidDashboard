@@ -1,6 +1,7 @@
 import pandas as pd
 from arcgis.gis import GIS,Item
 from arcgis import features
+from copy import deepcopy
 
 class ItemUpdate:
     def __init__(self,gis,itemid,itemdict=None,userdict=None):
